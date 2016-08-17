@@ -8,12 +8,16 @@ public class GameOverSceneManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Text text = winLoseGameObject.GetComponent<Text>();
-		if (PlayerPrefs.GetString("winState") == "win") {
-			text.text = "You Won!";
-		}
-		else if (PlayerPrefs.GetString("winState") == "lose") {
-			text.text = "Game Over!";
+
+		// End scene only
+		if (winLoseGameObject) {
+			Text text = winLoseGameObject.GetComponent<Text>();
+			if (PlayerPrefs.GetString("winState") == "win") {
+				text.text = "You Won!";
+			}
+			else if (PlayerPrefs.GetString("winState") == "lose") {
+				text.text = "Game Over!";
+			}
 		}
 	}
 	
