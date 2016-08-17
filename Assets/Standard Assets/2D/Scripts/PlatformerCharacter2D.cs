@@ -120,11 +120,13 @@ namespace UnityStandardAssets._2D
 		void OnTriggerEnter2D (Collider2D collider) {
 			// End State
 			if (collider.gameObject.tag == "Flames") {
+				PlayerPrefs.SetString("winState", "lose");
 				Application.LoadLevel("Game Over");
 			}
 
 			// Win State
 			if (collider.gameObject.tag == "Door") {
+				PlayerPrefs.SetString("winState", "win");
 				Application.LoadLevel("Game Over");
 			}
 		}

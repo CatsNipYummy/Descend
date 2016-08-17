@@ -14,7 +14,8 @@ public class FlameSpawner : MonoBehaviour {
 			randomNumber++;
 		}
 
-		Vector3 position = Camera.main.ViewportToWorldPoint(new Vector3(randomNumber/10.0f, 5.0f, 0.0f));
+		// Spawn point just above the screen viewport
+		Vector3 position = Camera.main.ViewportToWorldPoint(new Vector3(randomNumber/10.0f, 1.2f, 0.0f));
 		position.z = 0.0f;
 		transform.position = position;
 	}
