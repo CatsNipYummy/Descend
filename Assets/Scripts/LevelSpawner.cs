@@ -9,6 +9,8 @@ public class LevelSpawner : MonoBehaviour {
 	public GameObject flames;
 
 	public float flamesBeginAfter;
+	public float timeBetweenFlames;
+	public float numberOfPlatforms;
 
 	private GameObject m_platformParent;
 
@@ -16,7 +18,6 @@ public class LevelSpawner : MonoBehaviour {
 	private float m_fAspect = 1.33333f;
 
 	private float m_fDistanceBetweenPlatform = 3.0f;
-	private int m_iCurrentPlatformCount = 1;
 
 	private bool m_bIsRight = true;
 
@@ -32,33 +33,33 @@ public class LevelSpawner : MonoBehaviour {
 	}
 
 	void Awake () {
-		InvokeRepeating("spawnFlames", flamesBeginAfter, 2.0f);
+		InvokeRepeating("spawnFlames", flamesBeginAfter, timeBetweenFlames);
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		// Follow camera linearly over Y-Axis
 		Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, robotCharacter.transform.position.y, Camera.main.transform.position.z);
 	}
 
 	void createPlatforms() {
+		// Reference to place next platform's Y
 		float yPosition = platform.transform.position.y;
 		
-		// Instantiate 3 platforms to begin with
+		// Instantiate the platforms
 		m_platformParent = new GameObject("Platforms") as GameObject;
-		for (int i = 1; i <= 10; i++) {
+		for (int i = 1; i <= numberOfPlatforms; i++) {
 			GameObject platformGameObject = Instantiate(platform) as GameObject;
 			
 			// Set position
 			platformGameObject.transform.position = new Vector3(m_bIsRight ? PlatformPositioner.getLeftAnchor() : PlatformPositioner.getRightAnchor(), 
 			                                            yPosition, 
 			                                            platformGameObject.transform.position.z);
+			// Alternate between left and right align
 			m_bIsRight = !m_bIsRight;
-			m_iCurrentPlatformCount++;
 			yPosition -= m_fDistanceBetweenPlatform;
 
 			// Create exit door
-			if (i == 10) {
+			if (i == numberOfPlatforms) {
 				createExitDoor(platformGameObject.transform.position);
 			}
 
